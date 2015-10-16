@@ -27,7 +27,7 @@ proguard/
 *.log
 google.properties
 crashlytics.properties
-brandon
 *.iml
 app/.idea
 .idea
+app/brandon
