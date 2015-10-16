@@ -1,0 +1,88 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.fabric.io/public' }
+    }
+
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "21.1.2"
+
+    defaultConfig {
+        applicationId "com.payboy.brandon"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 11
+        versionName "3.0.1"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def file = output.outputFile
+                    def manifestParser = new com.android.builder.core.DefaultManifestParser()
+                    output.outputFile = new File(file.parent, file.name.replace("app-release.apk", "Wage Calculator " + defaultConfig.versionName + ".apk"))
+                    output.outputFile = new File(file.parentFile, "Wage Calculator " + defaultConfig.versionName + ".apk");
+                }
+            }
+
+            buildConfigField "boolean", "USE_CRASHLYTICS", "true"
+            ext.enableCrashlytics = true
+            buildConfigField "boolean", "USE_ANALYTICS", "true"
+        }
+
+        debug {
+            debuggable true
+            // disable crashlytics and google analytics
+            buildConfigField "boolean", "USE_CRASHLYTICS", "false"
+            ext.enableCrashlytics = false
+            buildConfigField "boolean", "USE_ANALYTICS", "false"
+        }
+
+
+        all {
+            //Google Analytics
+            def propertiesFile = rootProject.file('google.properties')
+            if (propertiesFile.exists()) {
+                Properties props = new Properties()
+                props.load(new FileInputStream(rootProject.file("google.properties")))
+                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", props['googleAnalyticsKey']
+            } else {
+                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", "\"NO_KEY\""
+            }
+        }
+
+        packagingOptions {
+            exclude 'META-INF/services/javax.annotation.processing.Processor'
+        }
+    }
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.google.android.gms:play-services-analytics:7.8.0'
+    compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.facebook.fresco:fresco:0.2.0+'
+    compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {
+        transitive = true;
+    }
+}

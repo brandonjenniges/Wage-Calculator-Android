@@ -1,0 +1,27 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.brandonjenniges.materialdesigntest.MainActivity">
+
+    <item
+        android:id="@+id/play_button"
+        android:orderInCategory="100"
+        android:title="Play"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_play_arrow_white_36dp"
+        />
+    <item
+        android:id="@+id/pause_button"
+        android:orderInCategory="200"
+        android:title="Pause"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_pause_white_36dp"
+        />
+    <item
+        android:id="@+id/clear_button"
+        android:orderInCategory="300"
+        android:title="Refresh"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_refresh_white_36dp"
+        />
+</menu>

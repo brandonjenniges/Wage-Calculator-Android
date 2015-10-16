@@ -1,3 +1,5 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Android template
 # Built application files
 *.apk
 *.ap_
@@ -25,9 +27,5 @@ proguard/
 
 # Log Files
 *.log
-google.properties
-crashlytics.properties
-brandon
-*.iml
-app/.idea
-.idea
+
+
