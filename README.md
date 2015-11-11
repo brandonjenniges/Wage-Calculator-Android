@@ -26,3 +26,7 @@ Screenshots
 ![Phone](screenshots/wage-1.png "Title screen")
 ![Phone](screenshots/wage-2.png "Difficulties")
 ![Phone](screenshots/wage-3.png "Game play")
+
+License
+---------------
+This project is released under the MIT license. See LICENSE for details.
