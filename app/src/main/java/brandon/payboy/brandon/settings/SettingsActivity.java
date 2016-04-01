@@ -14,8 +14,8 @@ import com.payboy.brandon.R;
 
 import brandon.payboy.brandon.WageCalculatorActivity;
 import brandon.payboy.brandon.util.AppPreferences;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class SettingsActivity extends Activity {
@@ -23,20 +23,20 @@ public class SettingsActivity extends Activity {
     private AppPreferences appPrefs;
     private boolean isNotificationEnabled;
 
-    @InjectView(R.id.settings_tv) TextView settingsTv;
-    @InjectView(R.id.your_wage_tv) TextView yourWageTv;
-    @InjectView(R.id.notification_tv) TextView notificationTv;
+    @Bind(R.id.settings_tv) TextView settingsTv;
+    @Bind(R.id.your_wage_tv) TextView yourWageTv;
+    @Bind(R.id.notification_tv) TextView notificationTv;
 
-    @InjectView(R.id.wage_enter_et) EditText wageEnterEt;
+    @Bind(R.id.wage_enter_et) EditText wageEnterEt;
 
-    @InjectView(R.id.on_btn) ImageView on_btn;
-    @InjectView(R.id.off_btn) ImageView off_btn;
+    @Bind(R.id.on_btn) ImageView on_btn;
+    @Bind(R.id.off_btn) ImageView off_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        ButterKnife.inject(this);
+        ButterKnife.bind(this);
 
         appPrefs = new AppPreferences(getApplicationContext());
         applyCustomFont();

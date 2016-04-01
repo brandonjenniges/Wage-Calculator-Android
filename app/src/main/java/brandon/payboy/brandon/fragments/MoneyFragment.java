@@ -31,8 +31,8 @@ import brandon.payboy.brandon.WageCalculatorActivity;
 import brandon.payboy.brandon.settings.SettingsActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 import brandon.payboy.brandon.util.AutoResizeTextView;
+import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class MoneyFragment extends Fragment {
@@ -45,14 +45,11 @@ public class MoneyFragment extends Fragment {
     private static int NOTIFICATION_ID = 1;
     private NumberFormat mMoneyFormatter;
 
-    @InjectView(R.id.money_tv)
-    AutoResizeTextView mMoneyTextView;
+    @Bind(R.id.money_tv) AutoResizeTextView mMoneyTextView;
 
-    @InjectView(R.id.logo_img)
-    SimpleDraweeView mLogoGif;
+    @Bind(R.id.logo_img) SimpleDraweeView mLogoGif;
 
-    @InjectView(R.id.settings_btn)
-    ImageButton mSettingsButton;
+    @Bind(R.id.settings_btn) ImageButton mSettingsButton;
 
     NotificationManager mNotificationManager;
     NotificationCompat.Builder mBuilder;
@@ -79,7 +76,7 @@ public class MoneyFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.money_fragment,
                 container, false);
-        ButterKnife.inject(this, view);
+        ButterKnife.bind(this, view);
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");
         mMoneyTextView.setTypeface(font);
 
