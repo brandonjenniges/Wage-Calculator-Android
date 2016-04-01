@@ -59,11 +59,11 @@ public class MoneyFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         mMoneyFormatter = NumberFormat.getCurrencyInstance();
 
-        appPrefs = new AppPreferences(activity);
+        appPrefs = new AppPreferences(context);
         wageValue = appPrefs.getWageValue();
         displayNotification = appPrefs.isNotificationEnabled();
 
