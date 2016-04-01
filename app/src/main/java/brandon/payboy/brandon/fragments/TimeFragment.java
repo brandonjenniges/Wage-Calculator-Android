@@ -1,14 +1,10 @@
 package brandon.payboy.brandon.fragments;
 
-
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +16,9 @@ import brandon.payboy.brandon.util.TimerHandler;
 
 public class TimeFragment extends Fragment {
 
+    TimeDisplayListener activityCallback;
     private Chronometer mTimeDisplayChronometer;
     private TimerHandler mTimerHandler;
-
-    private boolean hasBeenStarted = false;
-
-    TimeDisplayListener activityCallback;
-
-    public interface TimeDisplayListener {
-        public void onTimeChanged(long elapsedSeconds);
-    }
 
     public TimeFragment() {
         // Required empty public constructor
@@ -46,7 +35,6 @@ public class TimeFragment extends Fragment {
                     + " must implement TimeDisplayListener");
         }
 
-
     }
 
     @Override
@@ -60,12 +48,7 @@ public class TimeFragment extends Fragment {
         mTimeDisplayChronometer.setText("00:00:00");
         mTimeDisplayChronometer.setTypeface(font);
 
-        mTimerHandler = new TimerHandler(new Runnable() {
-            @Override
-            public void run() {
-                update();
-            }
-        });
+        mTimerHandler = new TimerHandler(() -> update());
         return view;
     }
 
@@ -76,8 +59,6 @@ public class TimeFragment extends Fragment {
     }
 
     public void startCalculating() {
-
-
         long stoppedMilliseconds = 0;
 
         // Creates Timer view and formats it
@@ -97,28 +78,18 @@ public class TimeFragment extends Fragment {
         mTimeDisplayChronometer.setBase(SystemClock.elapsedRealtime()
                 - stoppedMilliseconds);
 
-        mTimeDisplayChronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
-            @Override
-            public void onChronometerTick(Chronometer chronometer) {
-                long time = SystemClock.elapsedRealtime() - mTimeDisplayChronometer.getBase();
-                int h = (int) (time / 3600000);
-                int m = (int) (time - h * 3600000) / 60000;
-                int s = (int) (time - h * 3600000 - m * 60000) / 1000;
-                String hh = h < 10 ? "0" + h : h + "";
-                String mm = m < 10 ? "0" + m : m + "";
-                String ss = s < 10 ? "0" + s : s + "";
-                mTimeDisplayChronometer.setText(hh + ":" + mm + ":" + ss);
-            }
+        mTimeDisplayChronometer.setOnChronometerTickListener(chronometer -> {
+            long time = SystemClock.elapsedRealtime() - mTimeDisplayChronometer.getBase();
+            int h = (int) (time / 3600000);
+            int m = (int) (time - h * 3600000) / 60000;
+            int s = (int) (time - h * 3600000 - m * 60000) / 1000;
+            String hh = h < 10 ? "0" + h : h + "";
+            String mm = m < 10 ? "0" + m : m + "";
+            String ss = s < 10 ? "0" + s : s + "";
+            mTimeDisplayChronometer.setText(hh + ":" + mm + ":" + ss);
         });
         mTimeDisplayChronometer.start();
         mTimerHandler.startUpdating();
-
-        hasBeenStarted = true;
-    }
-
-    public void resumeCalculating() {
-        mTimerHandler.startUpdating();
-        mTimeDisplayChronometer.start();
     }
 
     public void stopCalculating() {
@@ -128,11 +99,7 @@ public class TimeFragment extends Fragment {
 
     public void update() {
         if (getActivity() != null) {
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    showElapsedTime();
-                }
-            });
+            getActivity().runOnUiThread(this::showElapsedTime);
         }
     }
 
@@ -140,12 +107,9 @@ public class TimeFragment extends Fragment {
         long elapsedSeconds = (SystemClock.elapsedRealtime() - mTimeDisplayChronometer
                 .getBase()) / 1000;
         activityCallback.onTimeChanged(elapsedSeconds);
-
-        SharedPreferences sharedPrefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-
-        boolean notification_status = sharedPrefs.getBoolean(
-                "prefNotification", false);
     }
 
+    public interface TimeDisplayListener {
+        void onTimeChanged(long elapsedSeconds);
+    }
 }

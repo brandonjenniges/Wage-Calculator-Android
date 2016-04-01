@@ -58,29 +58,15 @@ android {
                     output.outputFile = new File(file.parentFile, "Wage Calculator " + defaultConfig.versionName + ".apk");
                 }
             }
-
             buildConfigField "boolean", "USE_CRASHLYTICS", "true"
             ext.enableCrashlytics = true
-            buildConfigField "boolean", "USE_ANALYTICS", "true"
         }
         debug {
             testCoverageEnabled = true
             debuggable true
-            // disable crashlytics and google analytics
+            // disable crashlytics
             buildConfigField "boolean", "USE_CRASHLYTICS", "false"
             ext.enableCrashlytics = false
-            buildConfigField "boolean", "USE_ANALYTICS", "false"
-        }
-        all {
-            //Google Analytics
-            def propertiesFile = rootProject.file('google.properties')
-            if (propertiesFile.exists()) {
-                Properties props = new Properties()
-                props.load(new FileInputStream(rootProject.file("google.properties")))
-                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", props['googleAnalyticsKey']
-            } else {
-                buildConfigField "String", "GOOGLE_ANALYTICS_KEY", "\"NO_KEY\""
-            }
         }
     }
 
@@ -105,12 +91,10 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.2.1'
     compile 'com.android.support:design:23.2.1'
 
-    compile 'com.google.android.gms:play-services-analytics:7.8.0'
-
     //Butter Knife
     compile 'com.jakewharton:butterknife:7.0.1'
 
-    compile 'com.facebook.fresco:fresco:0.9.0'
+    //Crashlytics
     compile('com.crashlytics.sdk.android:crashlytics:2.5.0@aar') {
         transitive = true;
     }

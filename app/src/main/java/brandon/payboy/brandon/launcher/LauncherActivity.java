@@ -15,8 +15,6 @@ import io.fabric.sdk.android.Fabric;
 
 public class LauncherActivity extends Activity {
 
-    private AppPreferences appPrefs;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +25,7 @@ public class LauncherActivity extends Activity {
 
         setContentView(R.layout.launcher_activity);
 
-        appPrefs = new AppPreferences(getApplicationContext());
+        AppPreferences appPrefs = new AppPreferences(getApplicationContext());
 
         final Class<? extends Activity> activityClass;
 
@@ -41,5 +39,4 @@ public class LauncherActivity extends Activity {
         this.startActivity(newActivity);
         this.finish();
     }
-
 }

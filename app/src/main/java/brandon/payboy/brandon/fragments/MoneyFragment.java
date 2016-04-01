@@ -1,31 +1,20 @@
 package brandon.payboy.brandon.fragments;
 
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Typeface;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.payboy.brandon.R;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.text.NumberFormat;
 
 import brandon.payboy.brandon.WageCalculatorActivity;
 import brandon.payboy.brandon.settings.SettingsActivity;
@@ -37,22 +26,12 @@ import butterknife.OnClick;
 
 public class MoneyFragment extends Fragment {
 
-    private AppPreferences appPrefs;
-
-    private boolean displayNotification;
-    private double wageValue;
-
-    private static int NOTIFICATION_ID = 1;
-    private NumberFormat mMoneyFormatter;
-
-    @Bind(R.id.money_tv) AutoResizeTextView mMoneyTextView;
-
-    @Bind(R.id.logo_img) SimpleDraweeView mLogoGif;
-
-    @Bind(R.id.settings_btn) ImageButton mSettingsButton;
-
+    @Bind(R.id.money_tv)
+    AutoResizeTextView mMoneyTextView;
     NotificationManager mNotificationManager;
     NotificationCompat.Builder mBuilder;
+    private boolean displayNotification;
+    private double wageValue;
 
     public MoneyFragment() {
         // Required empty public constructor
@@ -61,9 +40,8 @@ public class MoneyFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mMoneyFormatter = NumberFormat.getCurrencyInstance();
 
-        appPrefs = new AppPreferences(context);
+        AppPreferences appPrefs = new AppPreferences(context);
         wageValue = appPrefs.getWageValue();
         displayNotification = appPrefs.isNotificationEnabled();
 
@@ -79,14 +57,6 @@ public class MoneyFragment extends Fragment {
         ButterKnife.bind(this, view);
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");
         mMoneyTextView.setTypeface(font);
-
-        /*
-        DraweeController controller = Fresco.newDraweeControllerBuilder()
-                .setUri(getUriForAsset("megan.gif", "gif"))
-                .setAutoPlayAnimations(true)
-                .build();
-        mLogoGif.setController(controller);
-*/
         return view;
     }
 
@@ -107,6 +77,7 @@ public class MoneyFragment extends Fragment {
                 createNotification(0.00);
             }
             mBuilder.setContentText(String.format("$%.2f", moneyValue));
+            int NOTIFICATION_ID = 1;
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         }
     }
@@ -131,43 +102,6 @@ public class MoneyFragment extends Fragment {
                 getActivity(), 0, toLaunch,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         mBuilder.setContentIntent(intentBack);
-    }
-
-    private Uri getUriForAsset(String file, String assetFolder) {
-        AssetManager assetManager = getActivity().getAssets();
-
-        InputStream in = null;
-        OutputStream out = null;
-        File f = new File(getActivity().getFilesDir(), file);
-        if (!f.exists()) {
-            Log.d("FILE", "FILE DOESNT EXIST");
-            try {
-                if (assetFolder != null) {
-                    in = assetManager.open(assetFolder + "/" + file);
-                } else {
-                    in = assetManager.open(file);
-                }
-                out = getActivity().openFileOutput(f.getName(), Context.MODE_WORLD_READABLE);
-
-                copyFile(in, out);
-                in.close();
-                in = null;
-                out.flush();
-                out.close();
-                out = null;
-            } catch (Exception e) {
-                Log.e("tag", e.getMessage());
-            }
-        }
-        return Uri.parse("file://" + getActivity().getFilesDir() + "/" + file);
-    }
-
-    private void copyFile(InputStream in, OutputStream out) throws IOException {
-        byte[] buffer = new byte[1024];
-        int read;
-        while ((read = in.read(buffer)) != -1) {
-            out.write(buffer, 0, read);
-        }
     }
 
     @OnClick(R.id.settings_btn)

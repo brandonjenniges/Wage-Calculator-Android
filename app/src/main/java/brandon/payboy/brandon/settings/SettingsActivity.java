@@ -20,17 +20,20 @@ import butterknife.OnClick;
 
 public class SettingsActivity extends Activity {
 
+    @Bind(R.id.settings_tv)
+    TextView settingsTv;
+    @Bind(R.id.your_wage_tv)
+    TextView yourWageTv;
+    @Bind(R.id.notification_tv)
+    TextView notificationTv;
+    @Bind(R.id.wage_enter_et)
+    EditText wageEnterEt;
+    @Bind(R.id.on_btn)
+    ImageView on_btn;
+    @Bind(R.id.off_btn)
+    ImageView off_btn;
     private AppPreferences appPrefs;
     private boolean isNotificationEnabled;
-
-    @Bind(R.id.settings_tv) TextView settingsTv;
-    @Bind(R.id.your_wage_tv) TextView yourWageTv;
-    @Bind(R.id.notification_tv) TextView notificationTv;
-
-    @Bind(R.id.wage_enter_et) EditText wageEnterEt;
-
-    @Bind(R.id.on_btn) ImageView on_btn;
-    @Bind(R.id.off_btn) ImageView off_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +48,7 @@ public class SettingsActivity extends Activity {
 
     private void setupDefaultValues() {
         //Set default values (if any)
-        wageEnterEt.setText(appPrefs.getWageValue() == 0 ? "" :String.format("%.2f", appPrefs.getWageValue()));
+        wageEnterEt.setText(appPrefs.getWageValue() == 0 ? "" : String.format("%.2f", appPrefs.getWageValue()));
 
         isNotificationEnabled = appPrefs.isNotificationEnabled();
         setNotificationButtonImages();
@@ -53,13 +56,13 @@ public class SettingsActivity extends Activity {
 
     @OnClick(R.id.on_btn)
     public void onButtonPressed(View view) {
-        if (isNotificationEnabled)return;
+        if (isNotificationEnabled) return;
         toggleNotificationSettings();
     }
 
     @OnClick(R.id.off_btn)
     public void offButtonPressed(View view) {
-        if (!isNotificationEnabled)return;
+        if (!isNotificationEnabled) return;
         toggleNotificationSettings();
     }
 

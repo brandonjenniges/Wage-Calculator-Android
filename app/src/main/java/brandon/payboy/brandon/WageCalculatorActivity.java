@@ -3,7 +3,6 @@ package brandon.payboy.brandon;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import com.facebook.drawee.backends.pipeline.Fresco;
 import com.payboy.brandon.R;
 
 import brandon.payboy.brandon.fragments.ButtonFragment;
@@ -13,13 +12,11 @@ import brandon.payboy.brandon.fragments.TimeFragment;
 
 public class WageCalculatorActivity extends FragmentActivity implements ButtonFragment.ButtonFragmentClickListener, TimeFragment.TimeDisplayListener {
 
-
     private boolean isRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fresco.initialize(this);
         setContentView(R.layout.wage_activity);
     }
 

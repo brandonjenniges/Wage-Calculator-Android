@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/radial_gradient"
@@ -63,8 +62,8 @@
 
         </LinearLayout>
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            fresco:placeholderImage="@drawable/big_icon"
+        <ImageView
+            android:src="@drawable/big_icon"
             android:layout_centerHorizontal="true"
             android:id="@+id/logo_img"
             android:layout_above="@id/money_ll"

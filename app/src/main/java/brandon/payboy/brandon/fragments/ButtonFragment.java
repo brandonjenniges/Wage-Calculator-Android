@@ -1,7 +1,5 @@
 package brandon.payboy.brandon.fragments;
 
-
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,15 +13,6 @@ import com.payboy.brandon.R;
 public class ButtonFragment extends Fragment {
 
     ButtonFragmentClickListener activityCallback;
-
-    public interface ButtonFragmentClickListener {
-        public void onPlayButtonClick();
-
-        public void onPauseButtonClick();
-
-        public void onClearButtonClick();
-    }
-
     ImageButton mPlayButton;
     ImageButton mPauseButton;
     ImageButton mClearButton;
@@ -49,30 +38,23 @@ public class ButtonFragment extends Fragment {
         View view = inflater.inflate(R.layout.button_fragment, container, false);
 
         mPlayButton = (ImageButton) view.findViewById(R.id.play_button);
-        mPlayButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityCallback.onPlayButtonClick();
-            }
-        });
+        mPlayButton.setOnClickListener(v -> activityCallback.onPlayButtonClick());
 
         mPauseButton = (ImageButton) view.findViewById(R.id.pause_button);
-        mPauseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityCallback.onPauseButtonClick();
-            }
-        });
+        mPauseButton.setOnClickListener(v -> activityCallback.onPauseButtonClick());
 
         mClearButton = (ImageButton) view.findViewById(R.id.clear_button);
-        mClearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activityCallback.onClearButtonClick();
-            }
-        });
+        mClearButton.setOnClickListener(v -> activityCallback.onClearButtonClick());
 
         return view;
+    }
+
+    public interface ButtonFragmentClickListener {
+        void onPlayButtonClick();
+
+        void onPauseButtonClick();
+
+        void onClearButtonClick();
     }
 
 
