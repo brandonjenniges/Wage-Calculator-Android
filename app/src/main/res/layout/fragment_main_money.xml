@@ -1,87 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/radial_gradient"
-    android:layout_centerInParent="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="brandon.payboy.brandon.viewmodels.MoneyViewModel" />
+    </data>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/radial_gradient">
 
-
-        <LinearLayout
-            android:paddingBottom="20dp"
-            android:id="@+id/money_ll"
-            android:layout_alignParentBottom="true"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
-            <View
-                android:visibility="invisible"
-                android:layout_width="5dp"
-                android:layout_height="match_parent" />
 
             <LinearLayout
-                android:layout_weight="1"
+                android:id="@+id/money_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal"
+                android:paddingBottom="20dp">
 
-                <ImageView
-                    android:id="@+id/dollar_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/dollar" />
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible" />
 
-                <brandon.payboy.brandon.util.AutoResizeTextView
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:id="@+id/money_tv"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:gravity="center"
-                    android:text="0.00"
-                    android:textSize="@dimen/money_display_size"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:ellipsize="none"
-                    android:textColor="#80000000"/>
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/dollar_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/dollar" />
+
+                    <brandon.payboy.brandon.util.AutoResizeTextView
+                        android:id="@+id/money_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="none"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:text="@{viewModel.displayMoney}"
+                        tools:text="@string/initial_money"
+                        android:textColor="#80000000"
+                        android:textSize="@dimen/money_display_size" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="5dp"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible" />
 
             </LinearLayout>
 
-            <View
-                android:visibility="invisible"
-                android:layout_width="5dp"
-                android:layout_height="match_parent" />
+            <ImageView
+                android:id="@+id/logo_img"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_above="@id/money_ll"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/big_icon" />
 
-        </LinearLayout>
-
-        <ImageView
-            android:src="@drawable/big_icon"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/logo_img"
-            android:layout_above="@id/money_ll"
-            android:layout_width="130dp"
-            android:layout_height="130dp" />
-
-        <FrameLayout
-            android:background="@drawable/settings_icon_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true">
-
-            <ImageButton
-                android:id="@+id/settings_btn"
-                android:background="#00000000"
+            <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/setting"/>
-        </FrameLayout>
+                android:layout_centerVertical="true"
+                android:background="@drawable/settings_icon_background">
+
+                <ImageButton
+                    android:id="@+id/settings_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:src="@drawable/setting"
+                    android:onClick="@{viewModel.settingsPressed}" />
+            </FrameLayout>
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</layout>

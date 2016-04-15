@@ -1,39 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primaryColorDark">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ImageButton
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:padding="15dp"
-        android:id="@+id/play_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:src="@drawable/ic_play_arrow_white_36dp" />
+    <data>
 
-    <ImageButton
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:padding="15dp"
-        android:id="@+id/pause_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:src="@drawable/ic_pause_white_36dp" />
+        <variable
+            name="viewModel"
+            type="brandon.payboy.brandon.viewmodels.ButtonViewModel" />
+    </data>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/primaryColorDark">
 
+        <ImageButton
+            android:id="@+id/play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="@{viewModel.playPressed}"
+            android:padding="15dp"
+            android:src="@drawable/ic_play_arrow_white_36dp" />
 
-    <ImageButton
-        android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:padding="15dp"
-        android:id="@+id/clear_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:src="@drawable/ic_refresh_white_36dp" />
+        <ImageButton
+            android:id="@+id/pause_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="@{viewModel.pausePressed}"
+            android:padding="15dp"
+            android:src="@drawable/ic_pause_white_36dp" />
 
-</LinearLayout>
+        <ImageButton
+            android:id="@+id/clear_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:background="#00000000"
+            android:onClick="@{viewModel.resetPressed}"
+            android:padding="15dp"
+            android:src="@drawable/ic_refresh_white_36dp" />
+
+    </LinearLayout>
+</layout>

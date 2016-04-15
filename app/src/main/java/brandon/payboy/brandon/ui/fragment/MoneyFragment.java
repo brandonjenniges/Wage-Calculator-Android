@@ -6,32 +6,36 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.payboy.brandon.R;
+import com.payboy.brandon.databinding.FragmentMainMoneyBinding;
 
-import brandon.payboy.brandon.ui.activity.WageCalculatorActivity;
+import java.util.Locale;
+
 import brandon.payboy.brandon.ui.activity.SettingsActivity;
+import brandon.payboy.brandon.ui.activity.WageCalculatorActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 import brandon.payboy.brandon.util.AutoResizeTextView;
+import brandon.payboy.brandon.viewmodels.MoneyViewModel;
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MoneyFragment extends Fragment {
+public class MoneyFragment extends Fragment implements MoneyViewModel.MoneyViewModelListener {
 
-    @Bind(R.id.money_tv)
-    AutoResizeTextView mMoneyTextView;
+    @Bind(R.id.money_tv) AutoResizeTextView moneyTextView;
     NotificationManager mNotificationManager;
     NotificationCompat.Builder mBuilder;
-    private boolean displayNotification;
-    private double wageValue;
+    AppPreferences appPrefs;
+
+    FragmentMainMoneyBinding binding;
+    MoneyViewModel moneyViewModel;
 
     public MoneyFragment() {
         // Required empty public constructor
@@ -40,43 +44,41 @@ public class MoneyFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
-        AppPreferences appPrefs = new AppPreferences(context);
-        wageValue = appPrefs.getWageValue();
-        displayNotification = appPrefs.isNotificationEnabled();
-
+        appPrefs = new AppPreferences(getActivity());
         mNotificationManager = (NotificationManager) getActivity().getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_money,
-                container, false);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_money, container, false);
+        View view = binding.getRoot();
+        moneyViewModel = new MoneyViewModel(this, appPrefs.getWageValue());
+        binding.setViewModel(moneyViewModel);
+        moneyViewModel.setup();
+
         ButterKnife.bind(this, view);
+
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");
-        mMoneyTextView.setTypeface(font);
+        moneyTextView.setTypeface(font);
+
         return view;
     }
 
     public void clearValues() {
-        mMoneyTextView.setText("0.00");
+        moneyViewModel.clearValues();
         mNotificationManager.cancelAll();
     }
 
     public void setMoneyValue(long elapsedSeconds) {
-        double ratePerHour = wageValue / 3600;
-        double moneyValue = ratePerHour * elapsedSeconds;
-        mMoneyTextView.setText(String.format("%.2f", moneyValue));
+        moneyViewModel.setMoneyValue(elapsedSeconds);
 
-        Log.d("MONEY", String.format("%.2f", moneyValue));
-        //Only show notification if setting is enabled
-        if (displayNotification) {
+        if (appPrefs.isNotificationEnabled()) {
             if (mBuilder == null) {
                 createNotification(0.00);
             }
-            mBuilder.setContentText(String.format("$%.2f", moneyValue));
+            mBuilder.setContentText(String.format(Locale.US, "$%.2f", appPrefs.getWageValue()));
             int NOTIFICATION_ID = 1;
             mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
         }
@@ -86,7 +88,7 @@ public class MoneyFragment extends Fragment {
         mBuilder = new NotificationCompat.Builder(
                 getActivity()).setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle("Wage Calculator")
-                .setContentText(String.format("$%.2f", moneyValue));
+                .setContentText(String.format(Locale.US, "$%.2f", moneyValue));
 
         mBuilder.setOngoing(true);
         mBuilder.setOnlyAlertOnce(true);
@@ -104,8 +106,8 @@ public class MoneyFragment extends Fragment {
         mBuilder.setContentIntent(intentBack);
     }
 
-    @OnClick(R.id.settings_btn)
-    public void onNotificationToggle(View view) {
+    @Override
+    public void settingsPressed() {
         startActivity(new Intent(getActivity(), SettingsActivity.class));
     }
 }

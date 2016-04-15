@@ -14,5 +14,6 @@
     <string name="your_wage_heading">YOUR WAGE</string>
     <string name="settings_heading">SETTINGS</string>
     <string name="start_wage_calculator_button">Continue</string>
+    <string name="initial_money">0.00</string>
 
 </resources>
