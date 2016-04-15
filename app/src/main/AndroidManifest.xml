@@ -33,9 +33,6 @@
             android:screenOrientation="nosensor">
         </activity>
 
-        <meta-data
-            android:name="com.crashlytics.ApiKey"
-            android:value="2bc1b233cfb91d29789e264b53638dbf1b62bdf9" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
