@@ -1,4 +1,4 @@
-package brandon.payboy.brandon.fragments;
+package brandon.payboy.brandon.ui.fragment;
 
 
 import android.app.Fragment;
@@ -16,8 +16,8 @@ import android.view.ViewGroup;
 
 import com.payboy.brandon.R;
 
-import brandon.payboy.brandon.WageCalculatorActivity;
-import brandon.payboy.brandon.settings.SettingsActivity;
+import brandon.payboy.brandon.ui.activity.WageCalculatorActivity;
+import brandon.payboy.brandon.ui.activity.SettingsActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 import brandon.payboy.brandon.util.AutoResizeTextView;
 import butterknife.Bind;
@@ -52,7 +52,7 @@ public class MoneyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.money_fragment,
+        View view = inflater.inflate(R.layout.fragment_main_money,
                 container, false);
         ButterKnife.bind(this, view);
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");

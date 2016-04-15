@@ -1,4 +1,4 @@
-package brandon.payboy.brandon.settings;
+package brandon.payboy.brandon.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.Toast;
 
 import com.payboy.brandon.R;
 
-import brandon.payboy.brandon.WageCalculatorActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +37,7 @@ public class SettingsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
 
         appPrefs = new AppPreferences(getApplicationContext());

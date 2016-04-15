@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".WageActivity">
+    tools:context="brandon.payboy.brandon.ui.activity.WageCalculatorActivity">
 
     <fragment
         android:layout_weight="1"
         android:id="@+id/money_fragment"
-        android:name="brandon.payboy.brandon.fragments.MoneyFragment"
+        android:name="brandon.payboy.brandon.ui.fragment.MoneyFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout="@layout/money_fragment" />
+        tools:layout="@layout/fragment_main_money" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -22,18 +22,18 @@
         <fragment
             android:layout_weight="2"
             android:id="@+id/time_fragment"
-            android:name="brandon.payboy.brandon.fragments.TimeFragment"
+            android:name="brandon.payboy.brandon.ui.fragment.TimeFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/time_fragment" />
+            tools:layout="@layout/fragment_main_time" />
 
         <fragment
             android:layout_weight="3"
             android:id="@+id/button_fragment"
-            android:name="brandon.payboy.brandon.fragments.ButtonFragment"
+            android:name="brandon.payboy.brandon.ui.fragment.ButtonFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/button_fragment" />
+            tools:layout="@layout/fragment_main_buttons" />
 
     </LinearLayout>
 

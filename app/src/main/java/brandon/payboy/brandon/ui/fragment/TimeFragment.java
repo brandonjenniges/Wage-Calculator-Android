@@ -1,4 +1,4 @@
-package brandon.payboy.brandon.fragments;
+package brandon.payboy.brandon.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
@@ -40,7 +40,7 @@ public class TimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.time_fragment,
+        View view = inflater.inflate(R.layout.fragment_main_time,
                 container, false);
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");

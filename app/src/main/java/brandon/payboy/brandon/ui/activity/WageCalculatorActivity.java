@@ -1,13 +1,13 @@
-package brandon.payboy.brandon;
+package brandon.payboy.brandon.ui.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
 import com.payboy.brandon.R;
 
-import brandon.payboy.brandon.fragments.ButtonFragment;
-import brandon.payboy.brandon.fragments.MoneyFragment;
-import brandon.payboy.brandon.fragments.TimeFragment;
+import brandon.payboy.brandon.ui.fragment.ButtonFragment;
+import brandon.payboy.brandon.ui.fragment.MoneyFragment;
+import brandon.payboy.brandon.ui.fragment.TimeFragment;
 
 
 public class WageCalculatorActivity extends FragmentActivity implements ButtonFragment.ButtonFragmentClickListener, TimeFragment.TimeDisplayListener {
@@ -17,7 +17,7 @@ public class WageCalculatorActivity extends FragmentActivity implements ButtonFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.wage_activity);
+        setContentView(R.layout.activity_main);
     }
 
     @Override

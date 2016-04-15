@@ -5,6 +5,7 @@ import android.test.ActivityInstrumentationTestCase2;
 
 import com.payboy.brandon.R;
 
+import brandon.payboy.brandon.ui.activity.WageCalculatorActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 
 import static android.support.test.espresso.Espresso.onView;

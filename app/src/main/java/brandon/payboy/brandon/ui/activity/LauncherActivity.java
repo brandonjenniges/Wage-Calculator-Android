@@ -1,4 +1,4 @@
-package brandon.payboy.brandon.launcher;
+package brandon.payboy.brandon.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,8 +8,6 @@ import com.crashlytics.android.Crashlytics;
 import com.payboy.brandon.BuildConfig;
 import com.payboy.brandon.R;
 
-import brandon.payboy.brandon.WageCalculatorActivity;
-import brandon.payboy.brandon.settings.SettingsActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 import io.fabric.sdk.android.Fabric;
 
@@ -23,7 +21,7 @@ public class LauncherActivity extends Activity {
             Fabric.with(this, new Crashlytics());
         }
 
-        setContentView(R.layout.launcher_activity);
+        setContentView(R.layout.activity_launcher);
 
         AppPreferences appPrefs = new AppPreferences(getApplicationContext());
 

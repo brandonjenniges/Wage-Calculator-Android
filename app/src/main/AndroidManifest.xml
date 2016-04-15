@@ -12,7 +12,7 @@
         android:screenOrientation="portrait">
 
         <activity
-            android:name="brandon.payboy.brandon.launcher.LauncherActivity"
+            android:name="brandon.payboy.brandon.ui.activity.LauncherActivity"
             android:label="Wage Calculator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,14 +21,14 @@
         </activity>
 
         <activity
-            android:name="brandon.payboy.brandon.WageCalculatorActivity"
+            android:name="brandon.payboy.brandon.ui.activity.WageCalculatorActivity"
             android:label="@string/title_activity_wage"
             android:screenOrientation="nosensor">
         </activity>
 
 
         <activity
-            android:name="brandon.payboy.brandon.settings.SettingsActivity"
+            android:name="brandon.payboy.brandon.ui.activity.SettingsActivity"
             android:label="@string/title_activity_wage"
             android:screenOrientation="nosensor">
         </activity>
