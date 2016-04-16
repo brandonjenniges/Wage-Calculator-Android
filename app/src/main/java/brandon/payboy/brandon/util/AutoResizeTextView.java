@@ -1,4 +1,6 @@
-package brandon.payboy.brandon.util; /**
+package brandon.payboy.brandon.util;
+
+/**
  *               DO WHAT YOU WANT TO PUBLIC LICENSE
  *                    Version 2, December 2004
  *

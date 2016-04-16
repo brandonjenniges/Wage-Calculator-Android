@@ -2,6 +2,7 @@ package brandon.payboy.brandon.viewmodels;
 
 import android.app.Activity;
 import android.databinding.BaseObservable;
+import android.databinding.ObservableField;
 import android.os.SystemClock;
 import android.widget.Chronometer;
 
@@ -9,6 +10,7 @@ import brandon.payboy.brandon.util.TimerHandler;
 
 public class TimeViewModel extends BaseObservable {
 
+    public ObservableField<String> displayTime = new ObservableField<>();
     private TimeViewModelListener listener;
     private TimerHandler timerHandler;
 
@@ -18,6 +20,7 @@ public class TimeViewModel extends BaseObservable {
 
     public void setup() {
         timerHandler = new TimerHandler(this::update);
+        displayTime.set("00:00:00");
     }
 
     public void update() {
@@ -32,14 +35,14 @@ public class TimeViewModel extends BaseObservable {
         }
 
         long elapsedSeconds = (SystemClock.elapsedRealtime() - this.listener.getChronometer()
-                    .getBase()) / 1000;
+                .getBase()) / 1000;
         this.listener.onTimeChanged(elapsedSeconds);
     }
 
     public void clearValues() {
         timerHandler.stopUpdating();
         this.listener.getChronometer().stop();
-        this.listener.getChronometer().setText("00:00:00");
+        displayTime.set("00:00:00");
     }
 
     public void startCalculating() {
@@ -70,7 +73,7 @@ public class TimeViewModel extends BaseObservable {
             String hh = h < 10 ? "0" + h : h + "";
             String mm = m < 10 ? "0" + m : m + "";
             String ss = s < 10 ? "0" + s : s + "";
-            this.listener.getChronometer().setText(hh + ":" + mm + ":" + ss);
+            this.displayTime.set(hh + ":" + mm + ":" + ss);
         });
         this.listener.getChronometer().start();
         timerHandler.startUpdating();

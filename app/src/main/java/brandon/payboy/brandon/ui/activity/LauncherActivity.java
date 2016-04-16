@@ -22,7 +22,10 @@ public class LauncherActivity extends Activity {
         }
 
         setContentView(R.layout.activity_launcher);
+        determineLaunchActivity();
+    }
 
+    private void determineLaunchActivity() {
         AppPreferences appPrefs = new AppPreferences(getApplicationContext());
 
         final Class<? extends Activity> activityClass;
