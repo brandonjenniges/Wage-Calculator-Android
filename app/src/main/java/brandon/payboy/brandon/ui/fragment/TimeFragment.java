@@ -2,23 +2,26 @@ package brandon.payboy.brandon.ui.fragment;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 
 import com.payboy.brandon.R;
+import com.payboy.brandon.databinding.FragmentMainTimeBinding;
 
-import brandon.payboy.brandon.util.TimerHandler;
+import brandon.payboy.brandon.viewmodels.TimeViewModel;
 
-public class TimeFragment extends Fragment {
+public class TimeFragment extends Fragment implements TimeViewModel.TimeViewModelListener {
 
     TimeDisplayListener activityCallback;
     private Chronometer mTimeDisplayChronometer;
-    private TimerHandler mTimerHandler;
+
+    FragmentMainTimeBinding binding;
+    TimeViewModel timeViewModel;
 
     public TimeFragment() {
         // Required empty public constructor
@@ -40,73 +43,41 @@ public class TimeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_main_time,
-                container, false);
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_time, container, false);
+        View view = binding.getRoot();
+        timeViewModel = new TimeViewModel(this);
+        binding.setViewModel(timeViewModel);
+        timeViewModel.setup();
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");
         mTimeDisplayChronometer = (Chronometer) view.findViewById(R.id.time_display_tv);
         mTimeDisplayChronometer.setText("00:00:00");
         mTimeDisplayChronometer.setTypeface(font);
 
-        mTimerHandler = new TimerHandler(() -> update());
         return view;
     }
 
     public void clearValues() {
-        mTimerHandler.stopUpdating();
-        mTimeDisplayChronometer.stop();
-        mTimeDisplayChronometer.setText("00:00:00");
+        timeViewModel.clearValues();
     }
 
     public void startCalculating() {
-        long stoppedMilliseconds = 0;
-
-        // Creates Timer view and formats it
-        String chronoText = mTimeDisplayChronometer.getText().toString();
-        String array[] = chronoText.split(":");
-
-        if (array.length == 2) {
-            stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 1000
-                    + Integer.parseInt(array[1]) * 1000;
-        } else if (array.length == 3) {
-            stoppedMilliseconds = Integer.parseInt(array[0]) * 60 * 60 * 1000
-                    + Integer.parseInt(array[1]) * 60 * 1000
-                    + Integer.parseInt(array[2]) * 1000;
-        }
-
-
-        mTimeDisplayChronometer.setBase(SystemClock.elapsedRealtime()
-                - stoppedMilliseconds);
-
-        mTimeDisplayChronometer.setOnChronometerTickListener(chronometer -> {
-            long time = SystemClock.elapsedRealtime() - mTimeDisplayChronometer.getBase();
-            int h = (int) (time / 3600000);
-            int m = (int) (time - h * 3600000) / 60000;
-            int s = (int) (time - h * 3600000 - m * 60000) / 1000;
-            String hh = h < 10 ? "0" + h : h + "";
-            String mm = m < 10 ? "0" + m : m + "";
-            String ss = s < 10 ? "0" + s : s + "";
-            mTimeDisplayChronometer.setText(hh + ":" + mm + ":" + ss);
-        });
-        mTimeDisplayChronometer.start();
-        mTimerHandler.startUpdating();
+        timeViewModel.startCalculating();
     }
 
     public void stopCalculating() {
-        mTimerHandler.stopUpdating();
-        mTimeDisplayChronometer.stop();
+        timeViewModel.stopCalculating();
     }
 
-    public void update() {
-        if (getActivity() != null) {
-            getActivity().runOnUiThread(this::showElapsedTime);
-        }
-    }
-
-    private void showElapsedTime() {
-        long elapsedSeconds = (SystemClock.elapsedRealtime() - mTimeDisplayChronometer
-                .getBase()) / 1000;
+    @Override
+    public void onTimeChanged(long elapsedSeconds) {
         activityCallback.onTimeChanged(elapsedSeconds);
+    }
+
+    @Override
+    public Chronometer getChronometer() {
+        return mTimeDisplayChronometer;
     }
 
     public interface TimeDisplayListener {

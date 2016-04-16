@@ -1,38 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primaryColor">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="brandon.payboy.brandon.viewmodels.TimeViewModel" />
+    </data>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_centerInParent="true">
+        android:background="@color/primaryColor"
+        android:baselineAligned="false"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+        <Chronometer
+            android:id="@+id/time_display_tv"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:drawableLeft="@drawable/timer"
+            android:drawableStart="@drawable/timer"
             android:gravity="center"
-            android:orientation="horizontal">
-
-
-            <Chronometer
-                android:drawableLeft="@drawable/timer"
-                android:padding="6dp"
-                android:id="@+id/time_display_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_gravity="left"
-                android:text="00:00:00"
-                android:textColor="#FFFFFF"
-                android:textSize="50sp" />
-        </LinearLayout>
+            android:padding="6dp"
+            android:text="@string/startTime"
+            android:textColor="#FFFFFF"
+            android:textSize="50sp" />
     </LinearLayout>
 
-</RelativeLayout>
+</layout>

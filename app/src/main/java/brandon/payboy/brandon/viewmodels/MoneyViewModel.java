@@ -7,30 +7,48 @@ import android.view.View;
 
 import java.util.Locale;
 
+import brandon.payboy.brandon.util.AppPreferences;
+import brandon.payboy.brandon.util.Notification;
+
 public class MoneyViewModel extends BaseObservable {
 
     private MoneyViewModelListener listener;
-    private double wageValue;
+    private AppPreferences appPreferences;
+    private Notification notification;
+
+    // AppPreferences convenience
+    private double rate;
+    private boolean isNotificationEnabled;
 
     public ObservableField<String> displayMoney = new ObservableField<>();
 
-    public MoneyViewModel(MoneyViewModelListener listener, double wageValue) {
+    public MoneyViewModel(MoneyViewModelListener listener, AppPreferences appPreferences, Notification notification) {
         this.listener = listener;
-        this.wageValue = wageValue;
+        this.appPreferences = appPreferences;
+        this.notification = notification;
     }
 
     public void setup() {
         displayMoney.set("0.00");
+        rate = appPreferences.getWageValue();
+        isNotificationEnabled = appPreferences.isNotificationEnabled();
     }
 
     public void clearValues() {
         displayMoney.set("0.00");
+        notification.cancel();
     }
 
     public void setMoneyValue(long elapsedSeconds) {
-        double ratePerHour = wageValue / 3600;
+        double ratePerHour = rate / 3600;
         double moneyValue = ratePerHour * elapsedSeconds;
-        displayMoney.set(String.format(Locale.US, "%.2f", moneyValue));
+
+        String displayValue = String.format(Locale.US, "%.2f", moneyValue);
+        displayMoney.set(displayValue);
+
+        if (isNotificationEnabled) {
+            notification.update(displayValue);
+        }
     }
 
     @SuppressWarnings("unused")
