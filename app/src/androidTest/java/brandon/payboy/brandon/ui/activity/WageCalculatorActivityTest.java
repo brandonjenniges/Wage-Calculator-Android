@@ -1,11 +1,10 @@
-package brandon.payboy.brandon;
+package brandon.payboy.brandon.ui.activity;
 
 import android.support.test.InstrumentationRegistry;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.payboy.brandon.R;
 
-import brandon.payboy.brandon.ui.activity.WageCalculatorActivity;
 import brandon.payboy.brandon.util.AppPreferences;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -28,10 +27,10 @@ public class WageCalculatorActivityTest extends ActivityInstrumentationTestCase2
         super.setUp();
         injectInstrumentation(InstrumentationRegistry.getInstrumentation());
 
-        activity = getActivity();
-
-        AppPreferences appPrefs = new AppPreferences(activity);
+        AppPreferences appPrefs = new AppPreferences(this.getInstrumentation().getTargetContext());
         appPrefs.setWageValue(100);
+
+        activity = getActivity();
     }
 
     @Override

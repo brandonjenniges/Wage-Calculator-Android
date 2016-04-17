@@ -26,11 +26,12 @@ android {
     }
 
     sourceSets {
+        String sharedTestDir = 'src/sharedTest/java'
         androidTest {
-            setRoot('src/androidTest')
+            java.srcDirs += 'src/sharedTest/java'
         }
         test {
-            setRoot('src/test')
+            java.srcDirs += 'src/sharedTest/java'
         }
     }
 

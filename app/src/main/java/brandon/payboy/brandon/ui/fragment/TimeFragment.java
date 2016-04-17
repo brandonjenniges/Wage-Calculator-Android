@@ -1,7 +1,7 @@
 package brandon.payboy.brandon.ui.fragment;
 
+import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.Chronometer;
 import com.payboy.brandon.R;
 import com.payboy.brandon.databinding.FragmentMainTimeBinding;
 
+import brandon.payboy.brandon.util.SystemClockWrapper;
 import brandon.payboy.brandon.viewmodels.TimeViewModel;
 
 public class TimeFragment extends Fragment implements TimeViewModel.TimeViewModelListener {
@@ -28,21 +29,9 @@ public class TimeFragment extends Fragment implements TimeViewModel.TimeViewMode
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        try {
-            activityCallback = (TimeDisplayListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement TimeDisplayListener");
-        }
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activityCallback = (TimeDisplayListener) getActivity();
 
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_time, container, false);
         View view = binding.getRoot();
@@ -52,7 +41,6 @@ public class TimeFragment extends Fragment implements TimeViewModel.TimeViewMode
 
         Typeface font = Typeface.createFromAsset(getActivity().getAssets(), "fonts/mplus-1c-black.ttf");
         mTimeDisplayChronometer = (Chronometer) view.findViewById(R.id.time_display_tv);
-        mTimeDisplayChronometer.setText("00:00:00");
         mTimeDisplayChronometer.setTypeface(font);
 
         return view;
@@ -78,6 +66,16 @@ public class TimeFragment extends Fragment implements TimeViewModel.TimeViewMode
     @Override
     public Chronometer getChronometer() {
         return mTimeDisplayChronometer;
+    }
+
+    @Override
+    public Activity getRunningActivity() {
+        return getActivity();
+    }
+
+    @Override
+    public long getElapsedRealTime() {
+        return SystemClockWrapper.getElapsedRealTime();
     }
 
     public interface TimeDisplayListener {

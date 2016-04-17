@@ -1,7 +1,6 @@
 package brandon.payboy.brandon.ui.fragment;
 
 import android.app.Fragment;
-import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,28 +14,19 @@ import brandon.payboy.brandon.viewmodels.ButtonViewModel;
 
 public class ButtonFragment extends Fragment implements ButtonViewModel.ButtonViewModelListener{
 
-    ButtonFragmentClickListener activityCallback;
-    FragmentMainButtonsBinding binding;
-    ButtonViewModel buttonViewModel;
+    private ButtonFragmentClickListener activityCallback;
+    private FragmentMainButtonsBinding binding;
+    private ButtonViewModel buttonViewModel;
 
     public ButtonFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        try {
-            activityCallback = (ButtonFragmentClickListener) context;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString()
-                    + " must implement ToolbarListener");
-        }
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        activityCallback = (ButtonFragmentClickListener) getActivity();
+
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main_buttons, container, false);
         View view = binding.getRoot();
         buttonViewModel = new ButtonViewModel(this);
