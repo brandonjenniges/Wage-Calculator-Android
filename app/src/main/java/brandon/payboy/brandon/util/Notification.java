@@ -30,6 +30,8 @@ public class Notification {
 
         builder.setOngoing(true);
         builder.setOnlyAlertOnce(true);
+        builder.setAutoCancel(true);
+        
         Intent toLaunch = new Intent(activity, WageCalculatorActivity.class);
 
         toLaunch.setAction("android.intent.action.MAIN");
