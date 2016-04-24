@@ -20,8 +20,8 @@ android {
         applicationId "com.payboy.brandon"
         minSdkVersion 15
         targetSdkVersion 23
-        versionCode 11
-        versionName "3.0.1"
+        versionCode 12
+        versionName "3.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
