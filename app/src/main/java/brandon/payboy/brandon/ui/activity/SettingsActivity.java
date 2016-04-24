@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.payboy.brandon.R;
 
@@ -87,7 +87,7 @@ public class SettingsActivity extends Activity {
             saveAppSettings(wageValue, isNotificationEnabled);
             startWageActivity();
         } catch (NumberFormatException e) {
-            Toast.makeText(SettingsActivity.this, "Please enter a valid hourly pay rate to continue.", Toast.LENGTH_SHORT).show();
+            Snackbar.make(view, "Enter a wage in the field above", Snackbar.LENGTH_SHORT).show();
         }
     }
 
